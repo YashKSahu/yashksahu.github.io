@@ -63,14 +63,110 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* THEME VARIABLES */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #00000; /* #333333 */
+    --link-color: #1772d0;
+    --link-hover-color: #f09228;
+    --name-color: #000000;
+    --heading-color: #000000;
+    --btn-bg: #e7e7e7;
+    --darkmode-btn-bg: #ffffff;
+    --btn-text: #333333;
+    --btn-border: #333333;
+    --venue-color: #e06666;
+    --highlight-bg: #ffffd0;
+    --header-bg: rgba(255, 255, 255, 0.8);
+    --header-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    --img-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Light mode image shadow */
+}
+
+:root.dark-mode {
+    --bg-color: #1c1c1dff;
+    --text-color: #e0e0e0;
+    --link-color: #8ab4f8;
+    --link-hover-color: #f09228;
+    --name-color: #ffffff;
+    --heading-color: #ffffff;
+    --btn-bg: #333333;
+    --darkmode-btn-bg: #333333;
+    --btn-text: #e0e0e0;
+    --btn-border: #e0e0e0;
+    --venue-color: #f28b82;
+    --highlight-bg: #444444;
+    --header-bg: rgba(18, 18, 18, 0.8);
+    --header-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    --img-shadow: 0 4px 8px rgba(0,0,0,0.7); /* Dark mode image shadow */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Lato', Verdana, Helvetica, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 0;
+    padding-top: 60px;
+}
+
+/* NEW HEADER / MENU BAR */
+.top-header {
+    background-color: var(--header-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--header-shadow);
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.top-header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.top-header nav li {
+    margin-right: 25px;
+}
+
+.top-header nav a {
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.top-header nav a:hover {
+    color: var(--link-hover-color);
+    font-weight: 500;
+    font-size: 16px;
+}
+
 a {
-  color: #1772d0;
+  color: var(--link-color);
   text-decoration: none;
 }
 
 a:focus,
 a:hover {
-  color: #f09228;
+  color: var(--link-hover-color);
   text-decoration: none;
 }
 
@@ -79,13 +175,14 @@ td,
 th,
 tr,
 p,
-a {
+a,
+strong {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 14px;
 }
 
-strong {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+p.bigger,
+a.bigger {
   font-size: 14px;
 }
 
@@ -94,6 +191,7 @@ h2 {
   font-weight: normal;
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 22px;
+  color: var(--heading-color);
 }
 
 .papertitle {
@@ -106,13 +204,17 @@ h2 {
   padding-top: 20px;
   margin: 0;
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 32px;
+  font-size: 36px;
+  color: var(--name-color);
 }
 
 .one {
   width: 160px;
   height: 160px;
   position: relative;
+  border-radius: 5px; /* adjust px or use % for roundness */
+  overflow: hidden;    /* ensures child content respects rounded corners */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
 .two {
@@ -122,6 +224,9 @@ h2 {
   transition: opacity .2s ease-in-out;
   -moz-transition: opacity .2s ease-in-out;
   -webkit-transition: opacity .2s ease-in-out;
+  border-radius: 5px; /* adjust px or use % for roundness */
+  overflow: hidden;    /* ensures child content respects rounded corners */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
 .fade {
@@ -131,12 +236,80 @@ h2 {
 }
 
 span.highlight {
-  background-color: #ffffd0;
+  background-color: var(--highlight-bg);
 }
 
-.colored-box {
-    color: black;
-    padding: 20px;
-    display: inline-block;
-    border-radius: 10px;
+img.profile-photo { /* Added a class for easier targeting */
+    width:100%;
+    max-width:100%;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: var(--img-shadow); /* Applied the shadow here */
+    transition: box-shadow 0.4s ease; /* Smooth transition for shadow */
+}
+
+
+.btn {
+  background-color: var(--btn-bg);
+  border: 0px solid var(--btn-border);  /* remove default border */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  margin-left: 0;
+  margin-top: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 11px;
+  border-radius: 0px;          /* rounded corners */
+  cursor: pointer;
+  color: var(--btn-text); 
+}
+
+.btn:hover {
+  color: var(--link-hover-color);
+}
+
+body, h2, .name, .btn, #darkModeToggle {
+  transition: background-color .7s ease, color 0.7s ease, border-color 0.4s ease;
+}
+
+#darkModeToggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.5rem; /* Makes the icon larger */
+    padding: 0px;
+    margin-top: -7px; /* Space between "Blog" and icon */
+}
+
+#toggleIcon {
+  font-size: 18px;
+}
+
+.logo-box {
+  width: 120px;             /* same width for all boxes */
+  height: 60px;            /* same height for all boxes */
+  background-color: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;      /* vertical center */
+  justify-content: center;  /* horizontal center */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  padding: 8px;
+}
+
+.logo-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;      /* keeps aspect ratio, no stretching */
+  border-radius: 6px;
+}
+
+td.logo-cell {
+  width: 20%;
+  vertical-align: middle;
+  padding-left: 30px;       /* adjust once, same everywhere */
 }

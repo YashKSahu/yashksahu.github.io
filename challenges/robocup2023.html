@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Yash - Robocup 2023</title>
+  <meta name="author" content="Yash Kumar Sahu">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    // This script runs before the page is rendered to prevent a theme flash
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    })();
+  </script>
+
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../blog-stylesheet.css">
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="header-content">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-container">
+    <!-- Main Content -->
+    <header>
+      <h1>RoboCup 2023: Autonomous Robot Manipulation Challenge</h1>
+      <p style="color: #666; font-size: 0.9em;">Posted on August 25, 2025 by Yash Kumar Sahu</p>
+    </header>
+
+    <!-- Table of Contents inside main content -->
+    <nav class="toc">
+      <h3>Table of Contents</h3>
+      <ul class="toc-list">
+        <li><a href="#RoboCup-and-ARM-Challenge">RoboCup and ARM Challenge</a></li>
+        <li><a href="#Our-Team">Our Team</a></li>
+        <li><a href="#Approach">Approach</a></li>
+        <li><a href="#Results">Results</a></li>
+        <li><a href="#Qualifying-Submission">Qualifying Submission</a></li>
+      </ul>
+    </nav>
+
+    <figure>
+      <img src="../images/robocup_image_collage.jpg" alt="Collage" width="750">
+      <figcaption></figcaption>
+    </figure>
+
+    <div id="RoboCup-and-ARM-Challenge">
+      <h2>RoboCup and ARM Challenge</h2>
+      <p>The RoboCup 2023, the biggest robotic and AI competition in the world (as of 2023), took place from July 4 to 10 at the Parc des Expositions in Bordeaux, France. The event brought together thousands of visitors and researchers in robotics and artificial intelligence around a common ambition: to share knowledge, highlight the latest innovations and advance technical and scientific progress. The event covered all the major scientific and technological challenges including the Autonomous Robot Manipulation (ARM) Challenge.</p>
+
+      <figure>
+        <img src="../images/robocup_group_photo.jpg" alt="RoboCup Group Photo">
+        <figcaption>A group photo with all participants across various challenges at the RoboCup 2023 main event held in France.</figcaption>
+      </figure>
+
+
+      <p>The RoboCup ARM Challenge aims at involving young researchers and students to address challenging problems related to autonomous robot manipulation, within an educational scientific competition. Participants are tasked with completing a recycling task with a robot manipulator in a dynamic simulation environment. Teams had to implement perception and control algorithms in MATLAB and Simulink to grasp and manipulate bottles, cans, and detergent pouches within a table to classify them into two bins. Points are awarded based on the performance of the algorithm in new environments. The top 6 shortlisted teams were invited to participate in the RoboCup 2023 Finals (France) using an in-person setup with a Franka Emika robot.</p>
+    </div>
+
+    <div id="Our-Team">
+      <h2>Our Team</h2>
+      <p>The interdisciplinary student team SillyARM—comprising Chayan Maiti, Deep Patel, Radhika Mittal, and Yash Kumar Sahu—carried out research and development activities at the Centre for AI, IoT and Robotics (CAIRO), IIITDM to participate in the RoboCup ARM 2023 Challenge under the supervision of Prof. M. Sreekumar.</p>
+    </div>
+
+    <div id="Approach">
+      <h2>Approach</h2>
+      <p>Objects are detected using YOLO with Non-Maximum Suppression to remove weak detections. Their 3D orientation is estimated via PCA on the depth point cloud, then transformed to the robot’s base frame to determine the grasp pose. Polynomial fitting smooths the robot’s trajectory for efficient motion.</p>
+
+      <figure>
+        <img src="../images/robocup_env_setup.jpg" alt="Enviroment Setup" width="800">
+        <figcaption>Real and Simulation Enviroment Setup</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../images/robocup_flowchart.jpg" alt="Flow Chart" width="800">
+        <figcaption>Process Diagram</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../images/robocup_pick_place.jpg" alt="Pick Place" width="500">
+        <figcaption>Robot performing pick place (real robot was not allowed to be recorded during operation)</figcaption>
+      </figure>
+
+    </div>
+
+    <div id="Results">
+      <h2>Results</h2>
+      <p>Ranked 4th globally and 3rd in classification accuracy among 10+ countries in the finals held in France.</p>
+
+      <figure>
+        <img src="../images/robocup_certificate.jpg" alt="Certificate" width="600">
+        <figcaption></figcaption>
+      </figure>
+
+    </div>
+
+    <div id="Qualifying-Submission">
+      <h2>Qualifying Submission</h2>
+
+      <div style="display: flex; justify-content: center; padding: 20px;">
+        <iframe width="600" height="337" 
+                src="https://www.youtube.com/embed/6KM77xtunvA" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+
+
+    </div>
+
+  </div>
+</body>
+<script src="../dark-theme-toggle.js"></script>
+</html>
