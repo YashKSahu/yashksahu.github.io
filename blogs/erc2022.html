@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Yash - ERC 2022</title>
+  <meta name="author" content="Yash Kumar Sahu">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    // This script runs before the page is rendered to prevent a theme flash
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    })();
+  </script>
+
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../blog-stylesheet.css">
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="header-content">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-container">
+    <!-- Main Content -->
+    <header>
+      <h1>European Rover Challenge (ERC) 2022</h1>
+      <p style="color: #666; font-size: 0.9em;">Posted on August 25, 2025 by Yash Kumar Sahu</p>
+    </header>
+
+    <!-- Table of Contents inside main content -->
+    <nav class="toc">
+      <h3>Table of Contents</h3>
+      <ul class="toc-list">
+        <li><a href="#ERC-Challenge">ERC Challenge</a></li>
+        <li><a href="#Our-Team">Our Team</a></li>
+        <li><a href="#Approach">Approach</a></li>
+        <li><a href="#Results">Results</a></li>
+        <li><a href="#Gallery">Gallery</a></li>
+      </ul>
+    </nav>
+
+    <figure>
+      <img src="../images/erc2022_leo_rover.jpg" alt="Collage" width="600">
+      <figcaption>The Leo Rover</figcaption>
+    </figure>
+
+    <div id="ERC-Challenge">
+      <h2>ERC Challenge</h2>
+      <p>The <a href="https://roverchallenge.eu/">European Rover Challenge (ERC)</a> is a renowned international planetary robotics competition organized by the European Space Foundation, that provides a valuable opportunity for students looking to advance their careers in industries vital to future generations. Students from technical universities around the world form teams and design unique robots. After few months of hard work their concepts are validated by space sector professionals. When qualified to the finals, teams further test their prototypes on a geologically realistic Martian terrain in numerous demanding tasks based on real NASA and ESA missions.</p>
+
+      <p>Teams develop perception and control algorithms for the rover to perform tasks such as marker identification, localization, path planning, autonomous navigation, and object detection in the Mars arena—a synthetic environment designed to mimic Martian conditions with craters, real rocks, and mud. The rover is operated remotely in real time (we controlled it from India while it was deployed in Poland). The algorithms are first developed and validated in a Mars simulation environment and then tested in real-world conditions.</p>
+    </div>
+
+    <!-- <figure>
+      <img src="../images/rmus_robot.jpg" alt="The autonomous 4-wheeled robot" width="400">
+      <figcaption>The autonomous 4-wheeled robot</figcaption>
+    </figure> -->
+
+    <div id="Our-Team">
+      <h2>Our Team</h2>
+      <p>Team Shunya: Yash Kumar Sahu (Software Team Lead), Jagadeeshan, Chandan, Atharv, Radhika, Pranav, Deep, Chayan, Radhika, Bhavna, Yash, Vishal, Rajesh, Devi, Ram, Vishnu, Murali, Himanshu, Tushar, Sibi, Manas, Vishnuram. Prof. Shubhankar Chakraborty (Mentor).</p>
+
+      <figure>
+      <img src="../images/erc2022_team.jpg" alt="Team" width="500">
+      <figcaption>The team, starting from left, Jagadeeshan, Chandan, Atharv, Radhika, Pranav, Deep, Chayan, Radhika, Bhavna, Yash, Vishal, Rajesh, Devi, Ram, Vishnu, Murali, Himanshu.</figcaption>
+    </figure>
+
+    </div>
+
+    <div id="Results">
+      <h2>Results</h2>
+      <p> Ranked 6th globally at the remote edition world finals featuring 50+ teams from 10+ countries. 2nd Rank Globally at the Qualifications-A Round.</p>
+
+      <figure>
+        <img src="../images/erc2022_finals_glimpse.jpg" alt="Final Match" width="800">
+        <figcaption>Glimpse from the final competition. From the control station, we monitored the rover’s perspective through its front-camera live feed while simultaneously observing the execution of our autonomous navigation code in the terminal.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../images/erc2022_qual_a.jpg" alt="Qualification A Results" width="800">
+        <figcaption>Results of Qualification A.</figcaption>
+      </figure>
+
+    </div>
+
+    <div id="Gallery">
+      <h2>Gallery</h2>
+
+      <figure>
+        <img src="../images/erc2022_leo_rover_with_marker.jpg" alt="Qualification A Results" width="400">
+        <figcaption>Leo rover observing a localization marker during navigation.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../images/erc2022_marsyard.jpg" alt="The marsyard and its map with marker locations (right)." width="800">
+        <figcaption>The marsyard and it's map with marker locations (right).</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../images/erc2022_finals_group_photo.jpg" alt="During the finals, chaos, the autonomous software stack does its magick, while we observe robot vitals." width="700">
+        <figcaption>During the finals, chaos, the autonomous software stack does its magick, while we observe robot vitals.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../images/erc2022_competition_day_plan.jpg" alt="Competition planning doodle, inside our student club room, MaRS." width="800">
+        <figcaption>Competition planning doodle, inside our student club room, MaRS.</figcaption>
+      </figure>
+
+    </div>
+
+  </div>
+</body>
+<script src="../dark-theme-toggle.js"></script>
+</html>
