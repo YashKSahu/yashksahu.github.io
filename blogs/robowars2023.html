@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Yash - RoboWars 2023</title>
+  <meta name="author" content="Yash Kumar Sahu">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    // This script runs before the page is rendered to prevent a theme flash
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    })();
+  </script>
+
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../blog-stylesheet.css">
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="header-content">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-container">
+    <!-- Main Content -->
+    <header>
+      <h1>RoboWars 2023 - IIITDM Vashisht Technical Festival</h1>
+      <p style="color: #666; font-size: 0.9em;">Posted on August 25, 2025 by Yash Kumar Sahu</p>
+    </header>
+
+    <!-- Table of Contents inside main content -->
+    <nav class="toc">
+      <h3>Table of Contents</h3>
+      <ul class="toc-list">
+        <li><a href="#The-Robot">The Robot</a></li>
+        <li><a href="#Our-Team">Our Team</a></li>
+        <li><a href="#Results">Results</a></li>
+        <li><a href="#Gallery">Gallery</a></li>
+      </ul>
+    </nav>
+
+    <figure>
+      <img src="../images/robowars2023_robot.jpg" alt="The robot" width="500">
+      <figcaption>Our Robot</figcaption>
+    </figure>
+
+    <div id="The-Robot">
+      <h2>The Robot</h2>
+      <p><strong>Hardware:</strong></p>
+        <p>Two LiPo batteries (one for each DC motor), ESP32 Microcontroller with SoC Wi-Fi – Joystick Control, Wooden chassis, 3D printed wheels, Skid-steer mechanism</p>
+
+      <p><strong>Attack:</strong></p>
+      <ul>
+        <li><p>Frontier blades can damage opponent robots while spinning</p></li>
+        <li><p>Ramps can topple competing robots</p></li>
+        <li><p>High-torque motors can push robots (up to 8 kg) outside the arena</p></li>
+      </ul>
+
+      <p><strong>Defense:</strong></p>
+      <ul>
+        <li><p>Wheels have an extra rubber layer for better traction</p></li>
+        <li><p>Wooden armor at the back for added protection</p></li>
+        <li><p>Electronics shielded with transparent acrylic sheets for safety and visual monitoring</p></li>
+      </ul>
+
+    </div>
+
+    <!-- <figure>
+      <img src="../images/rmus_robot.jpg" alt="The autonomous 4-wheeled robot" width="400">
+      <figcaption>The autonomous 4-wheeled robot</figcaption>
+    </figure> -->
+
+    <div id="Our-Team">
+      <h2>Our Team</h2>
+      <p>Team RoboMars: Aravind, Vashist and Samrat - Power Distribution and Motor Control. Saikat - Chasis Design, Wheel 3D Printing. Manas and Yash Kumar Sahu (Team Lead) - ROS (Robot Operating System) Control and Wireless Operations.</p>
+
+      <figure>
+      <img src="../images/robowars2023_team.jpg" alt="Team" width="500">
+      <figcaption>A selfie with our team (right) and our final opponent team (left). We lost the match after their robot nearly disabled our communication system, forcing us to resign.</figcaption>
+    </figure>
+
+    </div>
+
+    <div id="Results">
+      <h2>Results</h2>
+      <p> Achieved 2nd Rank at the finals in inter university competition. Organized by the Robotics Club at IIITDM as a part of technical festival in February 2023.</p>
+    </div>
+
+    <div id="Gallery">
+      <h2>Gallery</h2>
+
+      <figure>
+        <img src="../images/robowars2023_team_with_robot.jpg" alt="Samrat and Aravind with the robot, just few minutes before our first match." width="500">
+        <figcaption>Samrat and Aravind with the robot, just few minutes before our first match.</figcaption>
+      </figure>
+
+    </div>
+
+  </div>
+</body>
+<script src="../dark-theme-toggle.js"></script>
+</html>
