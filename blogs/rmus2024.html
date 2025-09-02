@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Yash - RMUS 2024</title>
+  <meta name="author" content="Yash Kumar Sahu">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    // This script runs before the page is rendered to prevent a theme flash
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    })();
+  </script>
+
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../blog-stylesheet.css">
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="header-content">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-container">
+    <!-- Main Content -->
+    <header>
+      <h1>ICRA 2024 - RoboMaster University Sim2Real (RMUS) Challenge</h1>
+      <p style="color: #666; font-size: 0.9em;">Posted on August 25, 2025 by Yash Kumar Sahu</p>
+    </header>
+
+    <!-- Table of Contents inside main content -->
+    <nav class="toc">
+      <h3>Table of Contents</h3>
+      <ul class="toc-list">
+        <li><a href="#ICRA-and-RMUS-Challenge">ICRA and RMUS Challenge</a></li>
+        <li><a href="#Our-Team">Our Team</a></li>
+        <li><a href="#Approach">Approach</a></li>
+        <li><a href="#Results">Results</a></li>
+        <li><a href="#Testing in Simulation">Testing in Simulation</a></li>
+      </ul>
+    </nav>
+
+    <figure>
+      <img src="../images/rmus_arena_collage.jpg" alt="Collage" width="790">
+      <figcaption></figcaption>
+    </figure>
+
+    <div id="ICRA and RMUS Challenge">
+      <h2>ICRA and RMUS Challenge</h2>
+      <p>The 2024 IEEE International Conference on Robotics and Automation (ICRA 2024) is the IEEE Robotics and Automation Society’s flagship conference. In the research community it is considered as the most prestigious robotics conference. The conference was held from May 13th to 17th, 2024, in Yokohama, Japan. It is a premier event in the field of robotics and automation, offering a platform for researchers, practitioners, and industry professionals to exchange ideas, present research findings, and explore the latest advancements in robotics technology.</p>
+
+      <p>The RoboMaster University Sim2Real Challenge (“RMUS”) at its core allows participants to win points by rearranging minerals using fully automated RoboMaster EPs that have been modified officially. The match lasts for five minutes with a sim2real-based format, where robots rearrange minerals based on the information shown on the exchange tags to earn points. The objective of the challenge is to assess how well a program completed on a simulation platform can be operated in real application environments. Participants will be ranked according to their total points won.</p>
+    </div>
+
+    <!-- <figure>
+      <img src="../images/rmus_robot.jpg" alt="The autonomous 4-wheeled robot" width="400">
+      <figcaption>The autonomous 4-wheeled robot</figcaption>
+    </figure> -->
+
+    <div id="Our-Team">
+      <h2>Our Team</h2>
+      <p>The interdisciplinary student team CAIRobotics carried out research and development activities at the Centre for AI, IoT, and Robotics at IIITDM under the supervision of Prof. M. Sreekumar. Team Members: Chayan Maiti, Deep Patel, Radhika Mittal, Sibi M, Yash Kumar Sahu (Team Lead).</p>
+
+      <figure>
+      <img src="../images/rmus_team.jpg" alt="Collage" width="800">
+      <figcaption>The team, starting from left, Sibi, Deep, Chayan, Radhika and Yash.</figcaption>
+    </figure>
+
+      <p>For the final round, teams were required to submit their programs and code files online. The judges then deployed these on the real robot to evaluate performance for the competition.</p>
+    </div>
+
+    <div id="Approach">
+      <h2>Approach</h2>
+
+      <figure>
+        <img src="../images/rmus_flowchart.jpg" alt="Flow Chart" width="800">
+        <figcaption>Process Diagram</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../images/rmus_motion_planning.jpg" alt="Motion Planning" width="800">
+        <figcaption>Motion Planning</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../images/rmus_mineral_detection.jpg" alt="Mineral Detection" width="500">
+        <figcaption>Mineral Detection</figcaption>
+      </figure>
+
+    </div>
+
+    <div id="Results">
+      <h2>Results</h2>
+      <p>Won 3rd Prize globally at the finals held in Japan. Competing among 30+ teams (1st ever Indian team to reach finals).</p>
+
+      <figure>
+        <img src="../images/rmus_final_match.jpg" alt="Final Match" width="400">
+        <figcaption>Glimpse from the final match</figcaption>
+      </figure>
+
+    </div>
+
+    <div id="Testing in Simulation">
+      <h2>Testing in Simulation</h2>
+
+      <div style="display: flex; justify-content: center; padding: 20px;">
+        <iframe src="https://drive.google.com/file/d/1wjhiYk2ZgJStMNwRrMqvrVcDdw2P5Fk-/preview" 
+                width="800" 
+                height="450" 
+                allow="autoplay">
+        </iframe>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+<script src="../dark-theme-toggle.js"></script>
+</html>
