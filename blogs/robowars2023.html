@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Yash - RoboWars 2023</title>
+  <title>RoboWars 2023 | Yash</title>
   <meta name="author" content="Yash Kumar Sahu">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,8 +18,8 @@
   </script>
 
   <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="../stylesheet.css">
-  <link rel="stylesheet" type="text/css" href="../blog-stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../css/blog-stylesheet.css">
 </head>
 
 <body>
@@ -28,29 +28,35 @@
       <nav>
         <ul>
           <li><a href="../index.html">Home</a></li>
+          <li><a href="blog.html">Blog</a></li>
           <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
         </ul>
       </nav>
     </div>
+    <div class="scroll-progress" id="scrollProgress"></div>
   </header>
 
   <div class="page-container">
     <!-- Main Content -->
     <header>
       <h1>RoboWars 2023 - IIITDM Vashisht Technical Festival</h1>
-      <p style="color: #666; font-size: 0.9em;">Posted on August 25, 2025 by Yash Kumar Sahu</p>
+      <p style="color: #666; font-size: 15px;">Posted on August 25, 2025 by Yash Kumar Sahu</p>
     </header>
 
     <!-- Table of Contents inside main content -->
-    <nav class="toc">
-      <h3>Table of Contents</h3>
-      <ul class="toc-list">
-        <li><a href="#The-Robot">The Robot</a></li>
-        <li><a href="#Our-Team">Our Team</a></li>
-        <li><a href="#Results">Results</a></li>
-        <li><a href="#Gallery">Gallery</a></li>
-      </ul>
-    </nav>
+    <div class="toc">
+      <details>
+        <summary style="position: relative; top: -8px; cursor: pointer;">
+          <strong>Table of Contents</strong>
+        </summary>
+        <ul class="toc-list">
+          <li><a href="#The-Robot">The Robot</a></li>
+          <li><a href="#Our-Team">Our Team</a></li>
+          <li><a href="#Results">Results</a></li>
+          <li><a href="#Gallery">Gallery</a></li>
+        </ul>
+      </details>
+    </div>
 
     <figure>
       <img src="../images/robowars2023_robot.jpg" alt="The robot" width="500">
@@ -64,18 +70,18 @@
 
       <p><strong>Attack:</strong></p>
       <ul>
-        <li><p>Frontier blades can damage opponent robots while spinning</p></li>
-        <li><p>Ramps can topple competing robots</p></li>
-        <li><p>High-torque motors can push robots (up to 8 kg) outside the arena</p></li>
+        <li>Frontier blades can damage opponent robots while spinning</li>
+        <li>Ramps can topple competing robots</li>
+        <li>High-torque motors can push robots (up to 8 kg) outside the arena</li>
       </ul>
 
       <p><strong>Defense:</strong></p>
       <ul>
-        <li><p>Wheels have an extra rubber layer for better traction</p></li>
-        <li><p>Wooden armor at the back for added protection</p></li>
-        <li><p>Electronics shielded with transparent acrylic sheets for safety and visual monitoring</p></li>
+        <li>Wheels have an extra rubber layer for better traction</li>
+        <li>Wooden armor at the back for added protection</li>
+        <li>Electronics shielded with transparent acrylic sheets for safety and visual monitoring</li>
       </ul>
-
+      
     </div>
 
     <!-- <figure>
@@ -106,10 +112,20 @@
         <img src="../images/robowars2023_team_with_robot.jpg" alt="Samrat and Aravind with the robot, just few minutes before our first match." width="500">
         <figcaption>Samrat and Aravind with the robot, just few minutes before our first match.</figcaption>
       </figure>
-
     </div>
 
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>&copy; <span id="currentYear"></span> <a href="../index.html"></a>Yash Kumar Sahu</p>
+        <script>
+          document.getElementById("currentYear").textContent = new Date().getFullYear();
+        </script>
+      </div>
+    </footer>
+
   </div>
+
 </body>
-<script src="../dark-theme-toggle.js"></script>
+<script src="../js/dark-theme-toggle.js"></script>
+<script src="../js/scroll-progress.js"></script>
 </html>

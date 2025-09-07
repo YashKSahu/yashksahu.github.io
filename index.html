@@ -19,7 +19,7 @@
     </script>
 
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
     
   </head>
 
@@ -30,10 +30,12 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
+                    <li><a href="blogs/blog.html">Blog</a></li>
                     <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
                 </ul>
             </nav>
         </div>
+        <div class="scroll-progress" id="scrollProgress"></div>
     </header>
 
     <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
@@ -367,21 +369,20 @@
 
           </tbody></table>
 
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr>
-              <td style="padding:0px">
-                <br>
-                <p style="text-align:right;font-size:small;">
-                  Based on <a href="https://github.com/jonbarron/jonbarron_website">source code</a>. 
-                </p>
-                <!-- <p style="text-align:right;font-size:small;" class="copy">© <span id="year">2025</span> Yash Kumar Sahu</p> -->
-              </td>
-            </tr>
-          </tbody></table>
-
         </td>
       </tr>
     </table>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>&copy; <span id="currentYear"></span> <a href="../index.html"></a>Yash Kumar Sahu - Based on <a href="https://github.com/jonbarron/jonbarron_website">source code</p>
+        <script>
+          document.getElementById("currentYear").textContent = new Date().getFullYear();
+        </script>
+      </div>
+    </footer>
+
   </body>
-  <script src="dark-theme-toggle.js"></script>
+  <script src="js/dark-theme-toggle.js"></script>
+  <script src="js/scroll-progress.js"></script>
 </html>

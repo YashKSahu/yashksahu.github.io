@@ -66,7 +66,7 @@
 /* THEME VARIABLES */
 :root {
     --bg-color: #ffffff;
-    --text-color: #00000; /* #333333 */
+    --text-color: #000000; /* #333333 */
     --link-color: #1772d0;
     --link-hover-color: #f09228;
     --name-color: #000000;
@@ -84,11 +84,11 @@
 
 :root.dark-mode {
     --bg-color: #1c1c1dff;
-    --text-color: #e0e0e0;
+    --text-color: #bbb;
     --link-color: #8ab4f8;
     --link-hover-color: #f09228;
     --name-color: #ffffff;
-    --heading-color: #ffffff;
+    --heading-color: #ddd;
     --btn-bg: #333333;
     --darkmode-btn-bg: #333333;
     --btn-text: #e0e0e0;
@@ -104,7 +104,6 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: 'Lato', Verdana, Helvetica, sans-serif;
-    font-size: 14px;
     transition: background-color 0.3s, color 0.3s;
     margin: 0;
     padding-top: 60px;
@@ -159,6 +158,18 @@ body {
     font-size: 16px;
 }
 
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 50px; /* just below the .top-header which is 50px tall */
+  left: 0;
+  height: 1px;
+  background: var(--link-hover-color); /* matches your theme */
+  width: 0%;
+  z-index: 9999;
+  transition: width 0.1s ease-out;
+}
+
 a {
   color: var(--link-color);
   text-decoration: none;
@@ -176,6 +187,7 @@ th,
 tr,
 p,
 a,
+li,
 strong {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 14px;
@@ -184,6 +196,10 @@ strong {
 p.bigger,
 a.bigger {
   font-size: 14px;
+}
+
+h1 {
+  color: var(--heading-color);
 }
 
 h2 {
@@ -262,7 +278,7 @@ img.profile-photo { /* Added a class for easier targeting */
   text-decoration: none;
   display: inline-block;
   font-size: 11px;
-  border-radius: 0px;          /* rounded corners */
+  border-radius: 3px;          /* rounded corners */
   cursor: pointer;
   color: var(--btn-text); 
 }
@@ -271,7 +287,7 @@ img.profile-photo { /* Added a class for easier targeting */
   color: var(--link-hover-color);
 }
 
-body, h2, .name, .btn, #darkModeToggle {
+body, h2, .name, .btn, .top-header, #darkModeToggle {
   transition: background-color .7s ease, color 0.7s ease, border-color 0.4s ease;
 }
 
@@ -282,7 +298,7 @@ body, h2, .name, .btn, #darkModeToggle {
     cursor: pointer;
     font-size: 1.5rem; /* Makes the icon larger */
     padding: 0px;
-    margin-top: -7px; /* Space between "Blog" and icon */
+    margin-top: -7px; /* Space between pages and icon */
 }
 
 #toggleIcon {
@@ -312,4 +328,22 @@ td.logo-cell {
   width: 20%;
   vertical-align: middle;
   padding-left: 30px;       /* adjust once, same everywhere */
+}
+
+.site-footer {
+  color: var(--text-color);
+  text-align: center;
+  padding: 10px;  /* more space at top */
+  border-top: 1px solid #ccc;
+  margin: 40px auto 0;
+}
+
+:root.dark-mode .site-footer {
+  color: #aaa;
+  border-top: 1px solid #444;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 13px;
 }

@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Yash - RMUS 2024</title>
+  <title>RMUS 2024 | Yash</title>
   <meta name="author" content="Yash Kumar Sahu">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,8 +18,8 @@
   </script>
 
   <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="../stylesheet.css">
-  <link rel="stylesheet" type="text/css" href="../blog-stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../css/blog-stylesheet.css">
 </head>
 
 <body>
@@ -28,30 +28,36 @@
       <nav>
         <ul>
           <li><a href="../index.html">Home</a></li>
+          <li><a href="blog.html">Blog</a></li>
           <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
         </ul>
       </nav>
     </div>
+    <div class="scroll-progress" id="scrollProgress"></div>
   </header>
 
   <div class="page-container">
     <!-- Main Content -->
     <header>
       <h1>ICRA 2024 - RoboMaster University Sim2Real (RMUS) Challenge</h1>
-      <p style="color: #666; font-size: 0.9em;">Posted on August 25, 2025 by Yash Kumar Sahu</p>
+      <p style="color: #666; font-size: 15px;">Posted on August 25, 2025 by Yash Kumar Sahu</p>
     </header>
 
     <!-- Table of Contents inside main content -->
-    <nav class="toc">
-      <h3>Table of Contents</h3>
-      <ul class="toc-list">
-        <li><a href="#ICRA-and-RMUS-Challenge">ICRA and RMUS Challenge</a></li>
-        <li><a href="#Our-Team">Our Team</a></li>
-        <li><a href="#Approach">Approach</a></li>
-        <li><a href="#Results">Results</a></li>
-        <li><a href="#Testing-in-Simulation">Testing in Simulation</a></li>
-      </ul>
-    </nav>
+    <div class="toc">
+      <details>
+        <summary style="position: relative; top: -8px; cursor: pointer;">
+          <strong>Table of Contents</strong>
+        </summary>
+        <ul class="toc-list">
+          <li><a href="#ICRA-and-RMUS-Challenge">ICRA and RMUS Challenge</a></li>
+          <li><a href="#Our-Team">Our Team</a></li>
+          <li><a href="#Approach">Approach</a></li>
+          <li><a href="#Results">Results</a></li>
+          <li><a href="#Testing-in-Simulation">Testing in Simulation</a></li>
+        </ul>
+      </details>
+    </div>
 
     <figure>
       <img src="../images/rmus_arena_collage.jpg" alt="Collage" width="790">
@@ -123,10 +129,20 @@
                 allow="autoplay">
         </iframe>
       </div>
-
     </div>
 
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>&copy; <span id="currentYear"></span> <a href="../index.html"></a>Yash Kumar Sahu</p>
+        <script>
+          document.getElementById("currentYear").textContent = new Date().getFullYear();
+        </script>
+      </div>
+    </footer>
+    
   </div>
+
 </body>
-<script src="../dark-theme-toggle.js"></script>
+<script src="../js/dark-theme-toggle.js"></script>
+<script src="../js/scroll-progress.js"></script>
 </html>

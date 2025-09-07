@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Yash's Log</title>
+  <meta name="author" content="Yash Kumar Sahu">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    // This script runs before the page is rendered to prevent a theme flash
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    })();
+  </script>
+
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../css/blog-stylesheet.css">
+
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="header-content">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="scroll-progress" id="scrollProgress"></div>
+  </header>
+
+  <div class="page-container">
+
+    <h1 class="blog-heading">👋 Welcome to Yash's Log</h1>
+    <p class="blog-desc">
+        Hi, this is Yash. I’m documenting my learning in this blog since 2022. These notes are from my journey in research and tech.
+    </p>
+    <div class="title-underline"></div>
+
+    <div class="blog-list">
+      <!-- Blog card -->
+      <a href="cnn-in-pytorch.html" class="blog-card">
+        <div class="blog-card-content">
+          <h2 class="blog-title">Convolutional Neural Networks (CNN) in Pytorch</h2>
+          <p class="blog-desc">
+            A convolutional neural network (CNN) is a type of feedforward neural network that learns features via filter (or kernel) optimization...
+          </p>
+          <div class="blog-meta">
+            <span>🗓️ Sep 4, 2022</span>
+            <span>⏳ 15 min read</span>
+            <span>Author: Yash Kumar Sahu</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>&copy; <span id="currentYear"></span> <a href="../index.html"></a>Yash Kumar Sahu</p>
+        <script>
+          document.getElementById("currentYear").textContent = new Date().getFullYear();
+        </script>
+      </div>
+    </footer>
+  
+  </div>
+
+</body>
+<script src="../js/dark-theme-toggle.js"></script>
+<script src="../js/scroll-progress.js"></script>
+</html>
