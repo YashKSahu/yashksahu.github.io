@@ -281,11 +281,18 @@ img.profile-photo { /* Added a class for easier targeting */
   border-radius: 3px;          /* rounded corners */
   cursor: pointer;
   color: var(--btn-text); 
+  transition: transform 0.1s ease, box-shadow 0.1s ease; /* smooth press */
 }
 
 .btn:hover {
   color: var(--link-hover-color);
 }
+
+.btn:active {
+  transform: translateY(2px);             /* move down a bit */
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); /* pressed-in look */
+}
+
 
 body, h2, .name, .btn, .top-header, #darkModeToggle {
   transition: background-color .7s ease, color 0.7s ease, border-color 0.4s ease;
