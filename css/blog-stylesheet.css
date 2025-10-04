@@ -49,6 +49,18 @@ body {
   color: inherit;             /* don’t change color */
 }
 
+.toc-list .toc-list {
+  padding-left: 20px;       /* indent */
+  margin-top: 4px;
+  margin-bottom: 6px;
+  border-left: 1px solid #ccc; /* subtle vertical guide */
+}
+
+.toc-list .toc-list li {
+  margin-bottom: 4px;
+  font-size: 0.95em;        /* slightly smaller font */
+}
+
 h2 {
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
@@ -80,7 +92,7 @@ h2, h3, section, .page-container > div[id] {
 p,
 a,
 strong {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 /* Program output styling */
@@ -138,7 +150,7 @@ pre.line-numbers code {
 
 
 .blog-heading {
-  font-size: 2rem;
+  font-size: 32px;
   margin: 30px 0;
   text-align: center;
 }
@@ -169,7 +181,7 @@ pre.line-numbers code {
 
 .blog-title {
   margin: 0 0 8px;
-  font-size: 1.4rem;
+  font-size: 22px;
   font-weight: 600;
 }
 
@@ -179,7 +191,7 @@ pre.line-numbers code {
 
 .blog-desc {
   margin: 0 0 12px;
-  font-size: 1rem;
+  font-size: 16px;
   color: var(--text-muted, #555);
   line-height: 1.5;
   max-height: 3em; /* ~2 lines */
@@ -189,7 +201,7 @@ pre.line-numbers code {
 
 .blog-meta {
   display: flex;
-  gap: 15px;
+  gap: 16px;
   font-size: 0.85rem;
   color: var(--text-muted, #777);
 }
@@ -228,4 +240,8 @@ body,
   background-color: var(--text-color); /* or pick a nice accent */
   margin: 0.5rem auto 2rem auto;
   border-radius: 2px;
+}
+
+.MathJax { 
+  font-size: 125% !important; 
 }

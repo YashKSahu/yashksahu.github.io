@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Linear Regression | Yash's Log</title>
+  <meta name="author" content="Yash Kumar Sahu">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    // This script runs before the page is rendered to prevent a theme flash
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    })();
+  </script>
+
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../css/blog-stylesheet.css">
+
+  <!-- Prism theme placeholder -->
+  <link id="prism-theme" rel="stylesheet" href="">
+
+  <!-- Line numbers + toolbar CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
+  <link href="https://fonts.cdnfonts.com/css/comic-mono" rel="stylesheet">
+
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="header-content">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
+        </ul>
+      </nav>
+      <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+  </header>
+
+  <div class="page-container">
+    <!-- Main Content -->
+    <header>
+      <h1>Linear Regression: From Classic Equations to Modern Neural Networks</h1>
+      <div class="blog-meta" style="color: #666;">
+        <span>🗓️ Sep 22, 2025</span>
+        <span>⏳ 30 min read</span>
+        <span>Author: Yash Kumar Sahu</span>
+      </div>
+    </header>
+
+    <div class="toc">
+      <details>
+        <summary style="position: relative; top: -8px; cursor: pointer;">
+          <strong>Table of Contents</strong>
+        </summary>
+        <ul class="toc-list">
+          <li><a href="#Mathematical-Formulation">Mathematical Formulation</a></li>
+          <li>
+            <a href="#Coding-with-Python">Coding with Python</a>
+            <ul class="toc-list">
+              <li><a href="#Simple-Linear-Regression">Simple Linear Regression</a></li>
+              <li><a href="#Polynomial-Regression">Polynomial Regression</a></li>
+            </ul>
+          </li>
+          <li><a href="#Linear-Regression-as-a-Neural-Network">Linear Regression as a Neural Network</a></li>
+          <li><a href="#References">References</a></li>
+        </ul>
+      </details>
+    </div>
+
+    <p>
+      Regression is a fundamental problem in machine learning. You can find it spread all over including applications such as, time-series analysis, forward/inverse model learning in robotics and control, optimization (line searches, global optimization), and deeplearning applications (e.g., computer games, speech-to-text translation, image recognition).
+    </p>
+
+    <p>
+      This blog explains and implements "Linear Regression"
+    </p>
+
+    <figure>
+      <img src="../images/linear-regression-cover.svg" alt="linear-regression-cover" width="800">
+      <figcaption></figcaption>
+    </figure>
+
+    <div id="Mathematical-Formulation">
+      <h2>Mathematical Formulation</h2>
+      <p>
+        Linear regression is a model that estimates the relationship between a dependent variable, \(\mathbf{y}\) and one or more independent variables, \(\mathbf{X}\). The dependent varible \(\mathbf{y}\) is also called <i>response</i> or <i>outcome variable</i> and the independent variable \(\mathbf{X}\) is also called <i>explanatory</i>, <i>predictor variables</i> or <i>design matrix</i>. <br> <br>
+
+        Formally, the goal is to find a function \(f\) that maps inputs \(x \in {{\rm I\!R}}^D\) to corresponding function values \(f(x) \in \mathbb{R}\). Training inputs \(x_n\) and corresponding observations \(y_{n}= f(x_{n)} + \epsilon\) are given. Where \(\epsilon\) captures noise and is an Independent and Identically Distributed (i.i.d.) random variable. <br> <br>
+
+        Let's take a probabilistic approach, since the presence of the observation noise and model the noise using a likelihood function.
+        \[
+          p(y \mid x) = \mathcal{N}(y \mid f(x), \sigma^2)
+        \]
+        Here, \(X \in {\rm I\!R}^{D}\) are inputs and \(y \in {\rm I\!R}\) are targets (noisy function values). The relationship between \(x\) and \(y\) is given as
+        \[y = f(x) + \epsilon\]
+        where \(\epsilon \sim \mathcal{N}(0, \sigma^2)\) is i.i.d Gaussian measurement noise with mean \(0\) and variance \(\sigma^2\). Our objective is to find a function that is close (similar) to the unknown function f that generated the data and that generalizes well.
+      </p>
+    </div>
+
+    <div id="Coding-with-Python">
+      <h2>Coding with Python</h2>
+      <p>Now, lets make the above derived closed-form solution tangible with code.</p>
+
+      <h3 id="Simple-Linear-Regression">Part 1: Simple Linear Regression</h3>
+      <p>The simplest case where the model estimates relationship between a single dependent variable and one independent variable.</p>
+
+<pre class="line-numbers language-python"><code># Simple Linear Regression (Maximum Likelihood Estimation)
+# -------------------------------------------------------
+# Demonstration of fitting a linear model using closed-form
+# maximum likelihood estimation and visualizing results.
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Configure plotting style (LaTeX fonts, serif, sizing, etc.)
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    "font.serif": "Palatino",
+    "text.latex.preamble": r"\usepackage{amsmath}",
+    "svg.fonttype": "none",
+    "font.size": 16,          # base font size
+    "axes.labelsize": 16,     # axis labels
+    "axes.titlesize": 16,     # title
+    "legend.fontsize": 14,
+    "xtick.labelsize": 14,
+    "ytick.labelsize": 14,
+    "xtick.direction": "out",
+    "ytick.direction": "out",
+})
+
+# ---------------------------
+# Generate synthetic dataset
+# ---------------------------
+rng = np.random.default_rng(1)
+
+X_train = np.linspace(-3, 3, 50).reshape(-1, 1)
+true_y = 0.25 * X_train
+noise = rng.normal(scale=0.45, size=X_train.shape)
+y_train = true_y + noise
+
+# ---------------------------
+# Linear regression functions
+# ---------------------------
+def maximum_likelihood_estimate(X, y):
+    """
+    Compute maximum likelihood estimate of linear regression parameters.
+
+    Args:
+        X (ndarray): Training inputs of shape (N, D).
+        y (ndarray): Training targets of shape (N, 1).
+
+    Returns:
+        theta (ndarray): Estimated parameters of shape (D, 1).
+    """
+    return np.linalg.solve(X.T @ X, X.T @ y)
+
+def predict(X_test, theta):
+    """
+    Predict outputs for test inputs using learned parameters.
+
+    Args:
+        X_test (ndarray): Test inputs of shape (K, D).
+        theta (ndarray): Parameters of shape (D, 1).
+
+    Returns:
+        y_pred (ndarray): Predictions of shape (K, 1).
+    """
+    return X_test @ theta
+
+# ---------------------------
+# Training and prediction
+# ---------------------------
+theta_ml = maximum_likelihood_estimate(X_train, y_train)
+
+X_test = np.linspace(-4, 4, 100).reshape(-1, 1)
+y_pred = predict(X_test, theta_ml)
+
+# ---------------------------
+# Visualization
+# ---------------------------
+plt.figure(figsize=(10, 4))
+ax = plt.gca()
+
+ax.plot(X_train, y_train, "o", ms=8, mew=0, label="Data Points")
+ax.plot(X_test, y_pred, label="Prediction", lw=3)
+
+# Style plot
+ax.grid(True, linestyle="-", linewidth=1, color="gray", alpha=0.5)
+ax.legend(loc="upper left", bbox_to_anchor=(0.025, 1.0))
+
+# Thicker spines and ticks
+for spine in ax.spines.values():
+    spine.set_linewidth(1.0)
+ax.tick_params(axis="both", length=8, width=1)
+
+ax.set_xlabel(r"$\mathbf{x}$")
+ax.set_ylabel(r"$\mathbf{y}$")
+
+plt.tight_layout()
+plt.savefig("simple-linear-regression.svg", format="svg")
+plt.close()
+</code></pre>
+
+      <figure>
+        <img src="../images/simple-linear-regression.svg" alt="simple-linear-regression" width="800">
+        <figcaption></figcaption>
+      </figure>
+
+      <h3 id="Polynomial-Regression">Part 2: Polynomial Regression - Linear Regression with Non-Linear (Polynomial) Features</h3>
+      <p>...</p>
+
+<pre class="line-numbers language-python"><code># Polynomial Regression (Maximum Likelihood Estimation)
+# -------------------------------------------------------
+# Demonstration of fitting a polynomial regression model using 
+# closed-form maximum likelihood estimation and visualizing results.
+
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.linalg
+
+# Configure plotting style (LaTeX fonts, serif, sizing, etc.)
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    "font.serif": "Palatino",
+    "text.latex.preamble": r"\usepackage{amsmath}",
+    "svg.fonttype": "none",
+    "font.size": 16,          # base font size
+    "axes.labelsize": 16,     # axis labels
+    "axes.titlesize": 16,     # title
+    "legend.fontsize": 14,
+    "xtick.labelsize": 14,
+    "ytick.labelsize": 14,
+    "xtick.direction": "out",
+    "ytick.direction": "out",
+})
+
+# ---------------------------
+# Generate synthetic dataset
+# ---------------------------
+rng = np.random.default_rng(1)
+
+def target_function(x):
+    """Noisy cosine function used to generate training targets."""
+    return np.cos(x) + rng.normal(scale=0.35, size=x.shape)
+
+X_train = np.linspace(-4, 4, 50).reshape(-1, 1)
+y_train = target_function(X_train)
+
+# ---------------------------
+# Polynomial regression functions
+# ---------------------------
+def polynomial_features(X, degree):
+    """
+    Generate polynomial feature matrix.
+
+    Args:
+        X (ndarray): Input values of shape (N, 1).
+        degree (int): Maximum polynomial degree.
+
+    Returns:
+        Phi (ndarray): Polynomial features of shape (N, degree+1).
+    """
+    X = X.flatten()
+    Phi = np.zeros((X.size, degree + 1))
+    for k in range(degree + 1):
+        Phi[:, k] = X ** k
+    return Phi
+
+def maximum_likelihood_estimate(Phi, y, reg=1e-8):
+    """
+    Solve for regression coefficients using maximum likelihood with
+    ridge regularization for numerical stability.
+
+    Args:
+        Phi (ndarray): Feature matrix of shape (N, D).
+        y (ndarray): Training targets of shape (N, 1).
+        reg (float): Regularization constant.
+
+    Returns:
+        theta (ndarray): Estimated parameters of shape (D, 1).
+    """
+    D = Phi.shape[1]
+    lhs = Phi.T @ Phi + reg * np.eye(D)
+    rhs = Phi.T @ y
+    cho_factor = scipy.linalg.cho_factor(lhs)
+    return scipy.linalg.cho_solve(cho_factor, rhs)
+
+def predict(X_test, theta, degree):
+    """
+    Predict outputs for test inputs using learned parameters.
+
+    Args:
+        X_test (ndarray): Test inputs of shape (K, 1).
+        theta (ndarray): Parameters of shape (D, 1).
+        degree (int): Maximum polynomial degree.
+
+    Returns:
+        y_pred (ndarray): Predictions of shape (K, 1).
+    """
+    Phi_test = polynomial_features(X_test, degree)
+    return Phi_test @ theta
+
+# ---------------------------
+# Training and prediction
+# ---------------------------
+degree = 4
+Phi_train = polynomial_features(X_train, degree)
+theta_ml = maximum_likelihood_estimate(Phi_train, y_train)
+
+X_test = np.linspace(-4, 4, 100).reshape(-1, 1)
+y_pred = predict(X_test, theta_ml, degree)
+
+# ---------------------------
+# Visualization
+# ---------------------------
+plt.figure(figsize=(10, 4))
+ax = plt.gca()
+
+ax.plot(X_train, y_train, "o", ms=8, mew=0, label="Data Points")
+ax.plot(X_test, y_pred, label="Prediction", lw=3)
+
+# Style plot
+ax.grid(True, linestyle="-", linewidth=1, color="gray", alpha=0.5)
+ax.legend(loc="upper left", bbox_to_anchor=(0.025, 1.0))
+
+# Thicker spines and ticks
+for spine in ax.spines.values():
+    spine.set_linewidth(1.0)
+ax.tick_params(axis="both", length=8, width=1)
+
+ax.set_xlabel(r"$\mathbf{x}$")
+ax.set_ylabel(r"$\mathbf{y}$")
+
+plt.tight_layout()
+plt.savefig("polynomial-regression.svg", format="svg")
+plt.close()
+</code></pre>
+
+      <figure>
+        <img src="../images/polynomial-regression.svg" alt="polynomial-regression" width="800">
+        <figcaption></figcaption>
+      </figure>
+
+    </div>
+
+    <div id="Linear-Regression-as-a-Neural-Network">
+      <h2>Linear Regression as a Neural Network</h2>
+
+<p>...</p>
+
+<pre class="line-numbers language-python"><code># Neural Network Regression
+# -------------------------------------------------------
+# Demonstration of fitting a regression model using a
+# simple feedforward neural network in PyTorch.
+
+import numpy as np
+import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Configure plotting style (LaTeX fonts, serif, sizing, etc.)
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    "font.serif": "Palatino",
+    "text.latex.preamble": r"\usepackage{amsmath}",
+    "svg.fonttype": "none",
+    "font.size": 16,          # base font size
+    "axes.labelsize": 16,     # axis labels
+    "axes.titlesize": 16,     # title
+    "legend.fontsize": 14,
+    "xtick.labelsize": 14,
+    "ytick.labelsize": 14,
+    "xtick.direction": "out",
+    "ytick.direction": "out",
+})
+
+# ---------------------------
+# Generate synthetic dataset
+# ---------------------------
+rng = np.random.default_rng(1)
+
+def target_function(x):
+    """Noisy cosine function used to generate training targets."""
+    return np.cos(x) + 0.2 * rng.normal(size=x.shape)
+
+X_train = np.linspace(-4, 4, 30).reshape(-1, 1)
+y_train = target_function(X_train)
+
+X_t = torch.from_numpy(X_train).float()
+y_t = torch.from_numpy(y_train).float()
+
+# ---------------------------
+# Define neural network model
+# ---------------------------
+model = nn.Sequential(
+    nn.Linear(1, 50),   # input layer → hidden
+    nn.ReLU(),
+    nn.Linear(50, 1)    # hidden → output
+)
+
+loss_fn = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=1e-2)
+
+# ---------------------------
+# Training loop
+# ---------------------------
+epochs = 50
+loss_history = []
+
+for epoch in range(epochs):
+    optimizer.zero_grad()
+    y_pred = model(X_t)
+    loss = loss_fn(y_pred, y_t)
+    loss.backward()
+    optimizer.step()
+    loss_history.append(loss.item())
+
+# ---------------------------
+# Prediction
+# ---------------------------
+X_test = np.linspace(-4, 4, 100).reshape(-1, 1)
+X_test_t = torch.from_numpy(X_test).float()
+y_test_pred = model(X_test_t).detach().numpy()
+
+# ---------------------------
+# Visualization
+# ---------------------------
+fig, axes = plt.subplots(1, 2, figsize=(16, 4.5))
+
+# Plot regression fit
+ax1 = axes[0]
+ax1.plot(X_train, y_train, "o", ms=8, mew=0, label="Data Points")
+ax1.plot(X_test, y_test_pred, label="NN Prediction", lw=3)
+ax1.set_xlabel(r"$\mathbf{x}$")
+ax1.set_ylabel(r"$\mathbf{y}$")
+ax1.legend(loc="upper left", bbox_to_anchor=(0.025, 1.0))
+ax1.grid(True, linestyle="-", linewidth=1, color="gray", alpha=0.5)
+
+# Thicker spines and ticks
+for spine in ax1.spines.values():
+    spine.set_linewidth(1.0)
+ax1.tick_params(axis="both", length=8, width=1)
+
+# Plot training loss
+ax2 = axes[1]
+ax2.plot(loss_history, lw=2)
+ax2.set_xlabel("Epoch")
+ax2.set_ylabel("MSE Loss")
+ax2.set_title("Training Loss Curve")
+ax2.grid(True, linestyle="-", linewidth=1, color="gray", alpha=0.5)
+
+for spine in ax2.spines.values():
+    spine.set_linewidth(1.0)
+ax2.tick_params(axis="both", length=8, width=1)
+
+plt.tight_layout()
+plt.savefig(
+    "neural-network-regression.svg", format="svg"
+)
+plt.close()
+</code></pre>
+
+      <figure>
+        <img src="../images/neural-network-regression.svg" alt="neural-network-regression" width="800">
+        <figcaption></figcaption>
+      </figure>
+
+    </div>
+
+
+    <div id="References">
+      <h2>References</h2>
+      <ol>
+        
+      </ol>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>&copy; <span id="currentYear"></span> Yash Kumar Sahu</p>
+        <script>
+          document.getElementById("currentYear").textContent = new Date().getFullYear();
+        </script>
+      </div>
+    </footer>
+
+</body>
+
+<script src="../js/dark-theme-toggle.js"></script>
+<script src="../js/scroll-progress.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<!-- Python language -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<!-- Plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> -->
+
+</html>

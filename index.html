@@ -101,6 +101,52 @@
 
           <table style="width:100%;border:0px;border-spacing:0px 10px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 
+            
+            <!-- IUI 26 Diffusion -->
+            <tr onmouseout="iui26_diffusion_stop()" onmouseover="iui26_diffusion_start()">
+              <td style="padding:16px;width:20%;vertical-align:middle">
+                <div class="one">
+                  <div class="two" id='iui26_diffusion_image'><video  width=100% height=100% muted autoplay loop>
+                  <source src="images/iui26_diffusion.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+
+                  </video></div>
+                  <img src='images/iui26_diffusion.jpg' width="160" height="160">
+                </div>
+                <script type="text/javascript">
+                  function iui26_diffusion_start() {
+                    document.getElementById('iui26_diffusion_image').style.opacity = "1";
+                  }
+
+                  function iui26_diffusion_stop() {
+                    document.getElementById('iui26_diffusion_image').style.opacity = "0";
+                  }
+                  iui26_diffusion_stop()
+                </script>
+              </td>
+              <td style="padding:8px;width:80%;vertical-align:middle">
+                
+              <span class="papertitle">Improving MR Interaction through GenAI</span>
+                <br>
+                <a href="https://scholar.google.com/citations?hl=en&authuser=1&user=64jHILsAAAAJ">Yashaswi Sinha</a>, 
+                <strong>Yash Kumar Sahu</strong>,
+                <a href="https://www.linkedin.com/in/atharva-rege-467543312/">Atharva Rege</a>, 
+                Rubini M, 
+                <a href="https://scholar.google.com/citations?hl=en&authuser=1&user=ktqjVN0AAAAJ">Himanshu Vishwakarma</a>, 
+                <a href="https://cambum.net/PB/">Pradipta Biswas</a>
+                <br>
+                <em>ACM IUI</em>, 2026 (Under Review)
+                <br>
+
+                <span class="btn">COMING SOON</span>
+
+                <p></p>
+                <p>
+                Composting object images onto diverse backgrounds along with surface material transfer in diffusion-based image generation.
+                </p>
+              </td>
+            </tr>
+
             <!-- Tools Dataset -->
             <tr onmouseout="tools_dataset_stop()" onmouseover="tools_dataset_start()">
               <td style="padding-left:16px;padding-bottom:16px;width:20%;vertical-align:middle">
@@ -135,7 +181,7 @@
                 <a href="https://scholar.google.com/citations?hl=en&authuser=1&user=1_290uAAAAAJ">Arushi Khokhar</a>,
                 <a href="https://cambum.net/PB/">Pradipta Biswas</a>
                 <br>
-                <em>NeurIPS</em>, 2025 (Under Review)
+                (Under Review)
                 <br>
 
                 <a href="https://huggingface.co/datasets/i3dlabiisc/I3D-Tools-Dataset" class="btn">DATASET</a>
