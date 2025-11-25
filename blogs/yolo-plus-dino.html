@@ -1,0 +1,396 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>YOLOv8 + DINOv2 | Yash's Log</title>
+  <meta name="author" content="Yash Kumar Sahu">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    // This script runs before the page is rendered to prevent a theme flash
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    })();
+  </script>
+
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../css/blog-stylesheet.css">
+
+  <link id="prism-theme" rel="stylesheet" href="">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
+  <link href="https://fonts.cdnfonts.com/css/comic-mono" rel="stylesheet">
+
+  <style>
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.9em;
+      min-width: 400px;
+      overflow-x: auto;
+      display: block; /* Allows scrolling on small screens */
+    }
+    .results-table thead tr {
+      background-color: #009879;
+      color: #ffffff;
+      text-align: left;
+    }
+    .results-table th, .results-table td {
+      padding: 12px 15px;
+      border: 1px solid #dddddd;
+      text-align: center;
+    }
+    .results-table tbody tr {
+      border-bottom: 1px solid #dddddd;
+    }
+    .results-table tbody tr:nth-of-type(even) {
+      background-color: #f3f3f3;
+    }
+    .results-table tbody tr:last-of-type {
+      border-bottom: 2px solid #009879;
+    }
+    /* Dark mode overrides for table */
+    .dark-mode .results-table thead tr {
+      background-color: #333;
+    }
+    .dark-mode .results-table th, .dark-mode .results-table td {
+      border-color: #444;
+      color: #ddd;
+    }
+    .dark-mode .results-table tbody tr {
+      background-color: #1e1e1e;
+    }
+    .dark-mode .results-table tbody tr:nth-of-type(even) {
+      background-color: #2a2a2a;
+    }
+  </style>
+
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="header-content">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><button id="darkModeToggle"><span id="toggleIcon">🌙</span> </button></li>
+        </ul>
+      </nav>
+      <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+  </header>
+
+  <div class="page-container">
+    <header>
+      <h1>YOLOv8 + DINOv2: Injecting Global Semantics for Better Detection</h1>
+      <div class="blog-meta" style="color: #666;">
+        <span>🗓️ Nov 25, 2025</span>
+        <span>⏳ 10 min read</span>
+        <span>Author: Yash Kumar Sahu</span>
+      </div>
+    </header>
+
+    <div class="toc">
+      <details>
+        <summary style="position: relative; top: -8px; cursor: pointer;">
+          <strong>Table of Contents</strong>
+        </summary>
+        <ul class="toc-list">
+          <li><a href="#The-Architecture-Strategy">The Architecture Strategy</a></li>
+          <li><a href="#Modifications-in-the-Architecture">Modifications in the Architecture</a></li>
+          <li><a href="#Implementation-The-Code">Implementation: The Code</a></li>
+          <li><a href="#Why-This-Works">Why This Works</a></li>
+          <li><a href="#Experimental-Results">Experimental Results</a></li>
+          <li><a href="#Setup-and-Training">Setup & Training</a></li>
+          <li><a href="#References">References</a></li>
+        </ul>
+      </details>
+    </div>
+
+    <p>
+      In the world of computer vision, we are often forced to choose between two extremes: Speed and Understanding. YOLO models can detect an object in milliseconds, but they learn purely from the bounding box labels. They don't inherently "know" what a dog is; the model just knows the texture of particular dogs learned from limited examples. 
+    </p>
+    <p>
+      On the other hand, Foundation Models like Meta's self-supervised DINOv2 have read the visual internet, trained over 150M images. They understand shape, occlusion, parts, and semantic relationships without ever seeing a single label. But they are heavy and slow.
+    </p>
+    <p>
+      In this project, I created a hybrid <strong>YOLOv8-DINO</strong> architecture. Unlike other complex fusion methods, my approach is elegant and lightweight: <strong>I inject the global "understanding" of the image from DINOv2 directly into the deepest layer of YOLO.</strong> This acts like a "hint" for the detector. It tells YOLO <em>what</em> is in the scene (e.g., "Industrial Equipment"), allowing the YOLO head to focus on <em>where</em> it is.
+    </p>
+
+    <div id="The-Architecture-Strategy">
+      <h2>The Architecture Strategy</h2>
+      <p>
+        Standard YOLOv8 uses a CSP-Darknet backbone to extract features, which is an enhanced version of the architecture used in earlier YOLO versions. It's fast and effective but lacks a "global" understanding of the image.
+      </p>
+
+      <figure>
+        <img src="../images/yolov8_architecture.webp" alt="yolov8_architecture" width="800">
+        <figcaption>Standard YOLOv8 Architecture (Credit: RangeKing)</figcaption>
+      </figure>
+
+      <p>We modify the standard YOLOv8 YAML to introduce a secondary path:</p>
+      <ol>
+        <li><strong>Path A (Standard):</strong> The image flows through the standard CSP-Darknet backbone (Layers 0-10) to extract spatial features.</li>
+        <li><strong>Path B (The Bypass):</strong> We grab the original raw image at Layer 0 and send it to a <strong>DINOv2 Module</strong>.</li>
+        <li><strong>Global Context Injection:</strong>
+          <ul>
+            <li>DINOv2 processes the image and outputs a <strong>Global Embedding</strong> (a rich vector summarizing the whole image).</li>
+            <li>We project and <strong>upsample</strong> this vector to match the size of the YOLO feature map.</li>
+            <li>Effectively, we are painting the YOLO features with a "Context Layer."</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div id="Modifications-in-the-Architecture">
+      <h2>Modifications in the Architecture</h2>
+      <p>
+        I introduced a <code>ConvDummy</code> layer at index 0. This allows me to pass the raw image from the start of the network directly to the DINO module at the end (`[-1, 10]`) without processing it through YOLO's layers first.
+      </p>
+
+      <figure>
+        <img src="../images/yolov8_dinov2_architecture_comparison.webp" alt="yolov8_dinov2_architecture_comparison" width="800">
+        <figcaption>Architectural comparison between original YOLOv8 and our custom YOLOv8 + DINOv2</figcaption>
+      </figure>
+
+      <p>Here is the modified YAML configuration for the backbone:</p>
+
+<pre class="line-numbers language-yaml"><code># YOLOv8.0n backbone (Modified)
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, ConvDummy, []]      # 0: Pass raw image (Args removed, inferred auto)
+  - [-1, 1, Conv, [64, 3, 2]]   # 1: Start of standard YOLO backbone
+  # ... [Standard Layers 2-9] ...
+  - [-1, 1, SPPF, [1024, 5]]    # 10: End of YOLO backbone (Stride 32)
+   
+  # The Fusion
+  - [0, 1, DINOv2, [1024]]      # 11: Take Raw Image (from 0), get Global Context
+  - [[-1, 10], 1, Concat, [1]]  # 12: Concatenate SPPF (Spatial) + DINO (Global)
+</code></pre>
+    </div>
+
+    <div id="Implementation-The-Code">
+      <h2>Implementation: The Code</h2>
+      <p>
+        The core of this method is the <strong>Global-to-Spatial Broadcast</strong>. DINOv2 gives us a 1D vector (embedding). We project it and upscale it to match the YOLO feature map size.
+      </p>
+
+      <figure>
+        <img src="../images/yolov8_dinov2_code.webp" alt="yolov8_dinov2_code" width="700">
+        <figcaption>Visual depiction of architectural changes</figcaption>
+      </figure>
+
+      <p>Here is the implementation of the DINO module:</p>
+
+<pre class="line-numbers language-python"><code>import torch
+import torch.nn as nn
+import torchvision.transforms as T
+import warnings
+import os
+import contextlib
+
+class DINOv2(nn.Module):
+    def __init__(self, c1, c2):
+        super().__init__()
+        # Load Frozen DINOv2
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore") # We suppress stdout to keep logs clean
+            with open(os.devnull, 'w') as fnull, contextlib.redirect_stdout(fnull), contextlib.redirect_stderr(fnull):
+                self.model = torch.hub.load("facebookresearch/dinov2", "dinov2_vits14")
+        
+        # Projector: Maps DINO embedding (384) to YOLO channels (c2), We define this in init so weights are trained!
+        self.projector = nn.Sequential(
+            nn.Conv2d(384, c2, kernel_size=1),
+            nn.Upsample(scale_factor=1, mode='bilinear') 
+        )
+
+    def preprocess(self, tensor, imgsz=512, patch_size=14):
+        # Resize to be divisible by patch_size (14)
+        imgsz = round(imgsz / patch_size) * patch_size
+        transform = T.Compose([
+            T.Resize((imgsz, imgsz), antialias=True), 
+            T.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
+        ])
+        return transform(tensor)
+
+    def forward(self, input_tensor):
+        # 1. Extract Global Embedding
+        with torch.no_grad():
+            processed = self.preprocess(input_tensor)
+            embedding = self.model(processed) # Shape: (Batch, 384)
+
+        # 2. Broadcast to Spatial Dimensions, (Batch, 384) -> (Batch, 384, 1, 1)
+        embedding = embedding.unsqueeze(-1).unsqueeze(-1)
+        
+        # 3. Align with YOLO Size (Stride 32)
+        h, w = input_tensor.shape[2] // 32, input_tensor.shape[3] // 32
+        
+        # 4. Project and Upsample, Resize the 1x1 embedding to HxW feature map
+        feature_map = nn.functional.interpolate(
+            self.projector[0](embedding), 
+            size=(h, w), 
+            mode='bilinear', 
+            align_corners=False
+        )
+        
+        return feature_map
+</code></pre>
+
+      <p>And the <code>ConvDummy</code> Module, a simple utility to allow the YAML config to route the raw input image.</p>
+
+<pre class="line-numbers language-python"><code>class ConvDummy(nn.Module):
+    # Accepts whatever args the parser sends, but ignores them
+    def __init__(self, c1, c2, *args, **kwargs):
+        super().__init__()
+        
+    def forward(self, x):
+        return x
+</code></pre>
+    </div>
+
+    <div id="Why-This-Works">
+      <h2>Why This Works</h2>
+      <p>
+        By injecting the <strong>Global Embedding</strong> rather than patch features, we provide the YOLO head with a "scene summary."
+      </p>
+      <ul>
+        <li><strong>Standard YOLO:</strong> Sees "edges" and "circles."</li>
+        <li><strong>YOLO + DINO:</strong> Sees "edges" and "circles" + <strong>"Context: This is a factory floor."</strong></li>
+      </ul>
+      <p>This extra context helps eliminate false positives and improves detection consistency in complex environments where local texture isn't enough.</p>
+    </div>
+
+    <div id="Experimental-Results">
+      <h2>Experimental Results</h2>
+      <p>
+        I evaluated the hybrid model on the <strong>SODA-D</strong> (Small Object Detection dAtaset). The results were significant. Fusing DINOv2 with YOLO resulted in almost a <strong>60% increase in accuracy</strong> (mAP50) compared to the standard YOLOv8n baseline, using the same training parameters (25 epochs, batch size 16).
+      </p>
+      
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Epochs</th>
+            <th>Batch Size</th>
+            <th>Images</th>
+            <th>Precision (P)</th>
+            <th>Recall (R)</th>
+            <th>mAP50</th>
+            <th>mAP50-95</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>YOLOv8 + DINOv2</strong></td>
+            <td>25</td>
+            <td>16</td>
+            <td>5017</td>
+            <td><strong>0.547</strong></td>
+            <td><strong>0.420</strong></td>
+            <td><strong>0.434</strong></td>
+            <td><strong>0.206</strong></td>
+          </tr>
+          <tr>
+            <td>YOLOv8 (Baseline)</td>
+            <td>25</td>
+            <td>16</td>
+            <td>5017</td>
+            <td>0.372</td>
+            <td>0.303</td>
+            <td>0.271</td>
+            <td>0.122</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p>
+        The table above shows a jump in mAP50 from 0.271 to 0.434. This validates the hypothesis that the global semantic context provided by DINOv2 significantly aids in detecting small, hard-to-distinguish objects that a standard CNN might miss.
+      </p>
+    </div>
+
+    <div id="Setup-and-Training">
+      <h2>Setup & Training</h2>
+      <p>To replicate this locally, you cannot just use <code>pip install ultralytics</code>. You need to modify the source code to "teach" YOLO about our new <code>DINOv2</code> module.</p>
+      
+      <p><strong>1. Clone and Install in "Editable" Mode</strong><br>
+      This allows you to modify the code and have changes take effect immediately.</p>
+<pre class="line-numbers language-bash"><code>git clone https://github.com/ultralytics/ultralytics.git
+cd ultralytics
+pip install -e .
+</code></pre>
+
+      <p><strong>2. Inject the Custom Classes</strong></p>
+      <ul>
+        <li>Modify <code>ultralytics/nn/modules/conv.py</code>: Paste the <code>ConvDummy</code> class code at the bottom of this file. Add <code>ConvDummy</code> to the <code>__all__</code> list at the top.</li>
+        <li>Modify <code>ultralytics/nn/modules/block.py</code>: Paste the <code>DINOv2</code> class code at the bottom of this file. Add <code>DINOv2</code> to the <code>__all__</code> list at the top.</li>
+      </ul>
+
+      <p><strong>3. Register the Modules in <code>tasks.py</code> (Crucial Step)</strong><br>
+      The YOLO YAML parser lives in <code>ultralytics/nn/tasks.py</code>. It needs to know your new classes exist. Open the file and explicitly import your new classes:</p>
+<pre class="line-numbers language-python"><code>from ultralytics.nn.modules.block import DINOv2
+from ultralytics.nn.modules.conv import ConvDummy
+</code></pre>
+
+      <p><strong>4. Run Training</strong><br>
+      Duplicate the standard config <code>yolov8.yaml</code>, rename it to <code>yolov8-dino.yaml</code>, replace the backbone, and run training:</p>
+
+<pre class="line-numbers language-python"><code>from ultralytics import YOLO
+
+# Load the model using our custom YAML
+model = YOLO("yolov8-dino.yaml")
+
+# Train
+model.train(
+    data="coco8.yaml", # or your_custom_dataset.yaml
+    epochs=100,
+    imgsz=640, # resizing to 644 might help align patches!
+    batch=16,
+    device=0
+)
+</code></pre>
+    </div>
+
+    <section id="References">
+      <h2>References</h2>
+      <ol>
+        <li><a href="https://github.com/facebookresearch/dinov2" target="_blank">Meta Research: DINOv2</a></li>
+        <li><a href="https://github.com/ultralytics/ultralytics" target="_blank">Ultralytics YOLOv8</a></li>
+        <li><a href="https://docs.ultralytics.com/modes/train/" target="_blank">Ultralytics Training Guide</a></li>
+      </ol>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>&copy; <span id="currentYear"></span> Yash Kumar Sahu</p>
+        <script>
+          document.getElementById("currentYear").textContent = new Date().getFullYear();
+        </script>
+      </div>
+    </footer>
+  </div>
+
+</body>
+
+<script src="../js/dark-theme-toggle.js"></script>
+<script src="../js/scroll-progress.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</html>
