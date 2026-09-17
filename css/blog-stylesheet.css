@@ -8,7 +8,8 @@ body {
 .page-container {
   max-width: 800px;
   width: 100%;
-  padding: 0px 20px 0; /* top:20px, sides:20px, bottom:0 */
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .toc {
