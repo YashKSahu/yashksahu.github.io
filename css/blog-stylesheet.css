@@ -93,7 +93,7 @@ h2, h3, section, .page-container > div[id] {
 p,
 a,
 strong {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* Program output styling */
@@ -103,7 +103,7 @@ pre.output {
   border-radius: 4px;
   padding: 12px 16px;
   font-family: monospace;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.5;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -121,7 +121,7 @@ pre.line-numbers {
   /*box-shadow: 0 4px 16px rgba(0,0,0,0.4);*/
   padding: 12px 16px;
   /*font-family: 'Comic Mono', monospace;*/
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.5;
   overflow: auto;
   position: relative;
@@ -151,7 +151,7 @@ pre.line-numbers code {
 
 
 .blog-heading {
-  font-size: 32px;
+  font-size: 28px;
   margin: 30px 0;
   text-align: center;
 }
@@ -182,7 +182,7 @@ pre.line-numbers code {
 
 .blog-title {
   margin: 0 0 8px;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
 }
 
